@@ -3,6 +3,7 @@ import { Geist } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import { organizationJsonLd } from "@/lib/jsonld";
 import "./globals.css";
 
 // Self-hosted via next/font (no external font origin — required by the CSP
@@ -29,6 +30,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${sans.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-background text-foreground">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd()),
+          }}
+        />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
