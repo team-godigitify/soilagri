@@ -4,6 +4,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { organizationJsonLd } from "@/lib/jsonld";
+import { env } from "@/config/env";
 import "./globals.css";
 
 // Self-hosted via next/font (no external font origin — required by the CSP
@@ -14,6 +15,7 @@ const sans = Geist({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(env.NEXT_PUBLIC_SITE_URL),
   title: {
     default: "Agrisoil — Fertilizer Trading",
     template: "%s | Agrisoil",

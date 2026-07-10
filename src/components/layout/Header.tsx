@@ -1,10 +1,18 @@
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { buttonVariants } from "@/components/ui/button";
 import { Container } from "@/components/shared/Container";
-import { MobileNav } from "@/components/layout/MobileNav";
 import { primaryNav, ctaNavItem } from "@/content/nav";
 import { company } from "@/content/company";
 import { cn } from "@/lib/utils";
+
+// Code-split the mobile menu (base-ui Sheet/Dialog) out of the initial
+// bundle — it's below-the-fold and click-triggered, not needed for first
+// paint. Measured ~315KB total JS on Home against the 150KB budget
+// (Section 9); this is the safe, low-risk slice of that.
+const MobileNav = dynamic(() =>
+  import("@/components/layout/MobileNav").then((mod) => mod.MobileNav)
+);
 
 /**
  * Sticky header: logo left, nav center, gold CTA right (Section 7 global
