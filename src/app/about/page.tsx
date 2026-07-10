@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/shared/Container";
 import { SectionHeading } from "@/components/shared/SectionHeading";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { OfficeCard } from "@/components/shared/OfficeCard";
 import { company } from "@/content/company";
 import { offices } from "@/content/offices";
 
@@ -35,24 +35,7 @@ export default function AboutPage() {
         <SectionHeading eyebrow="Footprint" title="Where we operate" />
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           {offices.map((office) => (
-            <Card key={office.id}>
-              <CardHeader>
-                <CardTitle className="flex items-center justify-between text-lg">
-                  {office.label}
-                  {office.isHeadquarters ? (
-                    <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
-                      Headquarters
-                    </span>
-                  ) : null}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="flex flex-col gap-1 text-sm text-muted-foreground">
-                {office.addressLines.map((line) => (
-                  <span key={line}>{line}</span>
-                ))}
-                <span>{office.country}</span>
-              </CardContent>
-            </Card>
+            <OfficeCard key={office.id} office={office} />
           ))}
         </div>
       </Container>
