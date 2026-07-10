@@ -25,6 +25,10 @@ export type CompanyInfo = {
   tagline?: string;
   /** [CONFIRM] — 2-3 real paragraphs from the client */
   aboutSummary?: string[];
+  /** [CONFIRM] — does a general phone line exist? */
+  generalPhone?: string;
+  /** [CONFIRM] — does info@agrisoil.com (or similar) exist? */
+  generalEmail?: string;
 };
 
 export type Leader = {

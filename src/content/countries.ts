@@ -1,0 +1,42 @@
+/**
+ * ISO 3166-1 country names for the RFQ form's country dropdown (Section
+ * 8: "country req (ISO dropdown, not free text)"). Reference data, not a
+ * company fact — no client confirmation needed.
+ */
+export const countries: { code: string; name: string }[] = [
+  { code: "US", name: "United States" },
+  { code: "CA", name: "Canada" },
+  { code: "MX", name: "Mexico" },
+  { code: "BR", name: "Brazil" },
+  { code: "AR", name: "Argentina" },
+  { code: "CO", name: "Colombia" },
+  { code: "CL", name: "Chile" },
+  { code: "PE", name: "Peru" },
+  { code: "GB", name: "United Kingdom" },
+  { code: "FR", name: "France" },
+  { code: "DE", name: "Germany" },
+  { code: "NL", name: "Netherlands" },
+  { code: "ES", name: "Spain" },
+  { code: "IT", name: "Italy" },
+  { code: "PL", name: "Poland" },
+  { code: "TR", name: "Turkey" },
+  { code: "UA", name: "Ukraine" },
+  { code: "EG", name: "Egypt" },
+  { code: "MA", name: "Morocco" },
+  { code: "NG", name: "Nigeria" },
+  { code: "ZA", name: "South Africa" },
+  { code: "SA", name: "Saudi Arabia" },
+  { code: "AE", name: "United Arab Emirates" },
+  { code: "IN", name: "India" },
+  { code: "PK", name: "Pakistan" },
+  { code: "BD", name: "Bangladesh" },
+  { code: "CN", name: "China" },
+  { code: "ID", name: "Indonesia" },
+  { code: "VN", name: "Vietnam" },
+  { code: "PH", name: "Philippines" },
+  { code: "TH", name: "Thailand" },
+  { code: "MY", name: "Malaysia" },
+  { code: "AU", name: "Australia" },
+  { code: "NZ", name: "New Zealand" },
+  { code: "OTHER", name: "Other" },
+];

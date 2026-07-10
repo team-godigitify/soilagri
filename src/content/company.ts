@@ -15,4 +15,6 @@ export const company: CompanyInfo = {
   founded: undefined,
   tagline: undefined,
   aboutSummary: undefined,
+  generalPhone: undefined,
+  generalEmail: undefined,
 };
