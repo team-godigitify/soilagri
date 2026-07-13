@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/shared/Reveal";
 import type { SpecializationBlock } from "@/types/content";
 
 /**
@@ -16,8 +17,8 @@ export function SpecializationSection({
   return (
     <div id="specialization" className="flex flex-col gap-10 scroll-mt-24">
       {blocks.map((block) => (
-        <div key={block.id} className="flex flex-col gap-3">
-          <h2 className="text-2xl font-semibold text-foreground">
+        <Reveal key={block.id} className="flex flex-col gap-3">
+          <h2 className="font-heading text-2xl font-medium text-foreground">
             {block.heading}
           </h2>
           {block.body.map((paragraph, i) => (
@@ -25,7 +26,7 @@ export function SpecializationSection({
               {paragraph}
             </p>
           ))}
-        </div>
+        </Reveal>
       ))}
     </div>
   );

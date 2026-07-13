@@ -20,7 +20,7 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         // The single Von Restorff isolate: reserved for the primary
         // "Request a Quote" CTA only — never used for secondary actions.
-        cta: "bg-cta text-cta-foreground hover:bg-cta/90",
+        cta: "bg-cta text-cta-foreground shadow-elevated-sm hover:bg-cta/90 hover:shadow-elevated",
       },
       size: {
         default:

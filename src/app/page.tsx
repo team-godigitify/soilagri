@@ -1,21 +1,39 @@
 import { Hero } from "@/components/home/Hero";
-import { StatsBand } from "@/components/home/StatsBand";
+import { IconStatBand } from "@/components/shared/IconStatBand";
+import { SplitSection } from "@/components/shared/SplitSection";
+import { ValueProps } from "@/components/home/ValueProps";
 import { ProductTeaser } from "@/components/home/ProductTeaser";
-import { LearnMoreRow } from "@/components/home/LearnMoreRow";
+import { FounderQuoteBand } from "@/components/home/FounderQuoteBand";
 import { CTABand } from "@/components/home/CTABand";
-
-// Value-props section (Section 7.1, step 3) is intentionally omitted:
-// the spec's example differentiators aren't verifiable facts yet, and a
-// padded 3-card row of unconfirmed claims is the dark pattern Law 1
-// forbids. Add it once the client confirms real differentiators.
+import { stats, aboutTeaser, supplyChainTeaser } from "@/content/home";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <StatsBand />
+      <IconStatBand stats={stats} />
+      <SplitSection
+        eyebrow={aboutTeaser.eyebrow}
+        title={aboutTeaser.title}
+        image={aboutTeaser.image}
+        imageSide="left"
+        inset={{ value: "25+", label: "Years of leadership experience" }}
+        cta={{ label: "Learn more about us", href: "/about" }}
+      >
+        <p>{aboutTeaser.body[0]}</p>
+      </SplitSection>
+      <ValueProps />
       <ProductTeaser />
-      <LearnMoreRow />
+      <FounderQuoteBand />
+      <SplitSection
+        eyebrow={supplyChainTeaser.eyebrow}
+        title={supplyChainTeaser.title}
+        image={supplyChainTeaser.image}
+        imageSide="right"
+        list={supplyChainTeaser.list}
+        inset={{ value: "3", label: "Incoterms: FOB, CFR & CIF" }}
+        cta={{ label: "See our supply chain", href: "/supply-chain" }}
+      />
       <CTABand />
     </>
   );

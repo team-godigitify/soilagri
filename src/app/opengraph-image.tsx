@@ -21,12 +21,13 @@ export default async function Image() {
           justifyContent: "center",
           alignItems: "flex-start",
           padding: "80px",
-          backgroundColor: "#1B4D3E",
+          backgroundColor: "#123c30",
           color: "#FFFFFF",
           fontSize: 72,
           fontWeight: 600,
         }}
       >
+        <div style={{ width: 64, height: 4, backgroundColor: "#bd923a", marginBottom: 28 }} />
         <div>{company.brandName}</div>
         <div style={{ fontSize: 32, fontWeight: 400, opacity: 0.85, marginTop: 16 }}>
           Fertilizer Trading

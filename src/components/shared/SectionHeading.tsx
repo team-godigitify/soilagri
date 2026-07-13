@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { Reveal } from "@/components/shared/Reveal";
 
 type SectionHeadingProps = {
   eyebrow?: string;
@@ -21,19 +22,25 @@ export function SectionHeading({
   align = "left",
 }: SectionHeadingProps) {
   return (
-    <div
+    <Reveal
       className={cn(
-        "flex flex-col gap-3",
+        "flex flex-col gap-4",
         align === "center" && "items-center text-center",
         className
       )}
     >
       {eyebrow ? (
-        <span className="text-sm font-medium tracking-wide text-primary uppercase">
+        <span
+          className={cn(
+            "flex items-center gap-3 text-sm font-medium tracking-[0.14em] text-primary uppercase",
+            align === "center" && "justify-center"
+          )}
+        >
+          <span className="h-px w-8 bg-cta" aria-hidden="true" />
           {eyebrow}
         </span>
       ) : null}
-      <h2 className="text-3xl font-semibold text-balance sm:text-4xl">
+      <h2 className="font-heading text-3xl font-medium text-balance sm:text-4xl lg:text-[2.75rem]">
         {title}
       </h2>
       {description ? (
@@ -41,6 +48,6 @@ export function SectionHeading({
           {description}
         </p>
       ) : null}
-    </div>
+    </Reveal>
   );
 }

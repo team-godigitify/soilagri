@@ -11,7 +11,7 @@ export default function Error({
 }) {
   return (
     <Container className="flex min-h-[50vh] flex-col items-start justify-center gap-4 py-24">
-      <h1 className="text-3xl font-semibold text-foreground">
+      <h1 className="font-heading text-3xl font-medium text-foreground">
         Something went wrong
       </h1>
       <p className="max-w-[60ch] text-muted-foreground">

@@ -23,10 +23,11 @@ export default async function Image({
           justifyContent: "center",
           alignItems: "flex-start",
           padding: "80px",
-          backgroundColor: "#1B4D3E",
+          backgroundColor: "#123c30",
           color: "#FFFFFF",
         }}
       >
+        <div style={{ width: 64, height: 4, backgroundColor: "#bd923a", marginBottom: 28 }} />
         <div style={{ fontSize: 28, opacity: 0.75 }}>Agrisoil</div>
         <div style={{ fontSize: 64, fontWeight: 600, marginTop: 12 }}>
           {product?.name ?? "Products"}

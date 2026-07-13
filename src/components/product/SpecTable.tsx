@@ -9,38 +9,36 @@ export function SpecTable({ specs }: { specs: ProductSpec[] }) {
   const hasTestMethods = specs.some((s) => s.testMethod);
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-border">
-      <table className="w-full min-w-[480px] border-collapse text-sm">
+    <div className="overflow-x-auto rounded-2xl border border-border shadow-elevated-xs">
+      <table className="w-full min-w-120 border-collapse text-sm">
         <thead>
-          <tr className="border-b border-border bg-muted/50 text-left">
-            <th className="px-4 py-3 font-medium text-foreground">
+          <tr className="border-b border-border bg-secondary/60 text-left">
+            <th className="px-5 py-3.5 text-xs font-medium tracking-wide text-muted-foreground uppercase">
               Property
             </th>
             {hasTestMethods ? (
-              <th className="px-4 py-3 font-medium text-foreground">
+              <th className="px-5 py-3.5 text-xs font-medium tracking-wide text-muted-foreground uppercase">
                 Test method
               </th>
             ) : null}
-            <th className="px-4 py-3 font-medium text-foreground">Value</th>
+            <th className="px-5 py-3.5 text-xs font-medium tracking-wide text-muted-foreground uppercase">
+              Value
+            </th>
           </tr>
         </thead>
         <tbody>
           {specs.map((spec, index) => (
             <tr
               key={spec.property}
-              className={
-                index % 2 === 1 ? "bg-muted/20" : undefined
-              }
+              className={index % 2 === 1 ? "bg-muted/30" : undefined}
             >
-              <td className="px-4 py-3 text-foreground">{spec.property}</td>
+              <td className="px-5 py-3.5 font-medium text-foreground">{spec.property}</td>
               {hasTestMethods ? (
-                <td className="px-4 py-3 text-muted-foreground">
+                <td className="px-5 py-3.5 text-muted-foreground">
                   {spec.testMethod ?? "—"}
                 </td>
               ) : null}
-              <td className="px-4 py-3 text-muted-foreground">
-                {spec.value}
-              </td>
+              <td className="px-5 py-3.5 font-medium text-primary">{spec.value}</td>
             </tr>
           ))}
         </tbody>

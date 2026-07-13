@@ -1,15 +1,17 @@
 import Link from "next/link";
+import Image from "next/image";
 import dynamic from "next/dynamic";
 import { buttonVariants } from "@/components/ui/button";
 import { Container } from "@/components/shared/Container";
+import { MegaMenu } from "@/components/layout/MegaMenu";
+import { LanguageToggle } from "@/components/layout/LanguageToggle";
 import { primaryNav, ctaNavItem } from "@/content/nav";
 import { company } from "@/content/company";
 import { cn } from "@/lib/utils";
 
 // Code-split the mobile menu (base-ui Sheet/Dialog) out of the initial
 // bundle — it's below-the-fold and click-triggered, not needed for first
-// paint. Measured ~315KB total JS on Home against the 150KB budget
-// (Section 9); this is the safe, low-risk slice of that.
+// paint.
 const MobileNav = dynamic(() =>
   import("@/components/layout/MobileNav").then((mod) => mod.MobileNav)
 );
@@ -21,28 +23,23 @@ const MobileNav = dynamic(() =>
  */
 export function Header() {
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/80">
-      <Container className="flex h-16 items-center justify-between gap-4">
-        <Link
-          href="/"
-          className="text-lg font-semibold tracking-tight text-foreground"
-        >
-          {company.brandName}
+    <header className="sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur-md supports-backdrop-filter:bg-background/75">
+      <Container className="flex h-18 items-center justify-between gap-4 sm:h-20">
+        <Link href="/" className="flex shrink-0 items-center">
+          <Image
+            src="/logo.png"
+            alt={company.brandName}
+            width={1668}
+            height={792}
+            priority
+            className="h-9 w-auto sm:h-11"
+          />
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          {primaryNav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        <MegaMenu items={primaryNav} />
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
+          <LanguageToggle />
           <Link
             href={ctaNavItem.href}
             className={cn(

@@ -1,4 +1,6 @@
+import { MapPin } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import type { Office } from "@/types/content";
 
 /**
@@ -9,15 +11,20 @@ export function OfficeCard({ office }: { office: Office }) {
   const hasMap = office.lat !== undefined && office.lng !== undefined;
 
   return (
-    <Card>
+    <Card className="h-full transition-all duration-300 hover:-translate-y-1 hover:border-primary/25 hover:shadow-elevated">
       <CardHeader>
-        <CardTitle className="flex items-center justify-between text-lg">
-          {office.label}
+        <div className="flex items-start justify-between gap-3">
+          <span className="flex size-11 items-center justify-center rounded-full bg-secondary text-primary">
+            <MapPin className="size-5" aria-hidden="true" strokeWidth={1.75} />
+          </span>
           {office.isHeadquarters ? (
-            <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
+            <Badge variant="secondary" className="text-[0.65rem]">
               Headquarters
-            </span>
+            </Badge>
           ) : null}
+        </div>
+        <CardTitle className="mt-2 font-heading text-lg font-medium">
+          {office.label}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-1 text-sm text-muted-foreground">
@@ -26,7 +33,7 @@ export function OfficeCard({ office }: { office: Office }) {
         ))}
         <span>{office.country}</span>
         {hasMap ? (
-          <div className="mt-3 h-32 rounded-md bg-muted" aria-hidden />
+          <div className="mt-3 h-32 rounded-lg bg-muted" aria-hidden />
         ) : null}
       </CardContent>
     </Card>

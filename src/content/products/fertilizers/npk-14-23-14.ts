@@ -1,4 +1,5 @@
 import type { Product } from "@/types/content";
+import { stockImages } from "@/content/images";
 
 /**
  * Translated from the client's French spec sheet (Section 5.4) — values
@@ -15,6 +16,7 @@ export const npkProduct: Product = {
     "Blended granular fertilizer — N14 / P₂O₅23 / K₂O14 / S6 / B1.",
   overview:
     "NPK 14-23-14+6S-1B is a granular blended fertilizer supplying nitrogen, phosphorus, potassium, sulfur, and boron in a single formulation.",
+  images: [stockImages.npkGranules],
   forms: ["Granular"],
   packaging: ["50 kg PP bags, PE liner 60–70 μm"],
   specs: [

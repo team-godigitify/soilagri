@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/shared/Container";
 import { SectionHeading } from "@/components/shared/SectionHeading";
+import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { ProductCard } from "@/components/product/ProductCard";
 import {
@@ -37,17 +38,19 @@ export default async function CategoryPage({
   const products = getProductsByCategory(category);
 
   return (
-    <Container className="flex flex-col gap-10 py-16">
+    <Container className="flex flex-col gap-10 py-16 sm:py-24">
       <Breadcrumbs
         items={[{ label: "Products", href: "/products" }, { label: cat.name }]}
       />
       <SectionHeading eyebrow="Products" title={cat.name} description={cat.description} />
       {products.length > 0 ? (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <RevealGroup className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           {products.map((product) => (
-            <ProductCard key={product.slug} product={product} />
+            <RevealItem key={product.slug}>
+              <ProductCard product={product} />
+            </RevealItem>
           ))}
-        </div>
+        </RevealGroup>
       ) : (
         <p className="text-muted-foreground">More products coming soon.</p>
       )}
