@@ -1,5 +1,6 @@
 "use client";
 
+import { forwardRef } from "react";
 import { motion, type Variants } from "framer-motion";
 import { fadeUp, staggerContainer } from "@/lib/motion";
 
@@ -39,10 +40,21 @@ type RevealGroupProps = {
   className?: string;
 };
 
-/** Stagger a grid/list of children — each child should be a motion element using `fadeUp` (or wrap items in RevealItem). */
-export function RevealGroup({ children, className }: RevealGroupProps) {
+/**
+ * Stagger a grid/list of children — each child should be a motion element
+ * using `fadeUp` (or wrap items in RevealItem). Forwards its ref so it can
+ * double as a scroll container directly — don't wrap it in a `display:
+ * contents` passthrough div for that purpose, since `whileInView` needs a
+ * real layout box to observe and a contents element has none, permanently
+ * stuck at `initial`.
+ */
+export const RevealGroup = forwardRef<HTMLDivElement, RevealGroupProps>(function RevealGroup(
+  { children, className },
+  ref
+) {
   return (
     <motion.div
+      ref={ref}
       className={className}
       initial="hidden"
       whileInView="show"
@@ -52,7 +64,7 @@ export function RevealGroup({ children, className }: RevealGroupProps) {
       {children}
     </motion.div>
   );
-}
+});
 
 export function RevealItem({
   children,

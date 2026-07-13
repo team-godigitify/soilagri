@@ -39,15 +39,33 @@ export type HeroSlide = {
   image: string;
 };
 
-export type StatItem = {
-  icon: LucideIcon;
+export type MetricItem = {
   value: string;
   label: string;
 };
 
+export type MarketWatchItem = {
+  key: string;
+  name: string;
+  category: string;
+  unit: string;
+  /** Illustrative price/change/trend shown until live data resolves (or always, for non-live rows). */
+  sampleValue: number;
+  sampleChangePct: number;
+  sampleTrend: number[];
+} & ({ source: "live"; vantageFn: "WHEAT" | "CORN" } | { source: "sample" });
+
 export type ServiceItem = {
   icon: LucideIcon;
   name: string;
+  href: string;
+};
+
+export type ProductShowcaseItem = {
+  name: string;
+  category: string;
+  blurb: string;
+  image: string;
   href: string;
 };
 

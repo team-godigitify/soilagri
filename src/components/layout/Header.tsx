@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ChevronDown, Mail, Menu } from "lucide-react";
 import { Container } from "@/components/shared/Container";
@@ -48,7 +49,14 @@ export function Header() {
   }, []);
 
   return (
-    <header className="relative">
+    // display:contents — header contributes no box of its own, so the sticky
+    // <nav> below is laid out as a direct child of <body> (full page height)
+    // instead of this ~116px-tall wrapper. Sticky's containing block is
+    // bounded by its actual DOM parent's box regardless of that parent's
+    // `position` value, so nesting it inside a short `position:relative`
+    // header (the previous approach) made it stop sticking after ~1 row of
+    // scroll — it had nowhere left to stick within.
+    <header className="contents">
       {/* Utility bar */}
       <div className="bg-foreground text-background">
         <Container className="flex h-9 items-center justify-between text-xs">
@@ -78,8 +86,15 @@ export function Header() {
         )}
       >
         <Container className="flex h-20 items-center justify-between gap-6">
-          <Link href="/" className="font-heading text-2xl font-semibold">
-            Agrisoil
+          <Link href="/" className="flex shrink-0 items-center rounded-lg bg-white px-2.5 py-1.5">
+            <Image
+              src="/logo.png"
+              alt={company.brandName}
+              width={1668}
+              height={792}
+              preload
+              className="h-8 w-auto sm:h-10"
+            />
           </Link>
 
           <ul className="hidden items-center xl:flex">

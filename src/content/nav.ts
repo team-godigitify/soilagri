@@ -29,7 +29,7 @@ import {
 import type { NavItem } from "@/types/content";
 
 /**
- * Positions Agrisoil as an international commodity trading and supply chain
+ * Positions SoilAgri as an international commodity trading and supply chain
  * partner — the IA follows a B2B buyer's evaluation journey (who you are →
  * what you trade → how you operate → where you operate → proof → contact)
  * rather than a flat product catalog.
@@ -45,13 +45,13 @@ export const navItems: NavItem[] = [
           {
             label: "Company Overview",
             href: "/about/company-overview",
-            description: "Who Agrisoil is and how we work.",
+            description: "Who SoilAgri is and how we work.",
             icon: Building2,
           },
           {
             label: "Leadership",
             href: "/about/leadership",
-            description: "The team behind Agrisoil.",
+            description: "The team behind SoilAgri.",
             icon: Users,
           },
           {
@@ -61,7 +61,7 @@ export const navItems: NavItem[] = [
             icon: Globe2,
           },
           {
-            label: "Why Agrisoil",
+            label: "Why SoilAgri",
             href: "/about/why-agrisoil",
             description: "25+ years of leadership experience in trading.",
             icon: ShieldCheck,
@@ -70,7 +70,7 @@ export const navItems: NavItem[] = [
       },
     ],
     featured: {
-      eyebrow: "About Agrisoil",
+      eyebrow: "About SoilAgri",
       title: "A strategic supply partner, not just a trader",
       description:
         "Built on more than 25 years of leadership experience in international fertilizer and agricultural commodity trading.",

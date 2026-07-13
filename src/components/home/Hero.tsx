@@ -2,10 +2,10 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/shared/Container";
+import { ParallaxImage } from "@/components/shared/ParallaxImage";
 import { buttonVariants } from "@/components/ui/button";
 import { heroSlides } from "@/content/home";
 import { cn } from "@/lib/utils";
@@ -44,24 +44,29 @@ export function Hero() {
 
   return (
     <section
-      className="relative overflow-hidden bg-primary text-primary-foreground"
+      className="bg-primary text-primary-foreground relative overflow-hidden"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
       <div className="relative grid min-h-screen lg:grid-cols-[48%_52%]">
-        {/* Bold geometric background shape — visual anchor behind the text pane */}
-        <svg
-          className="pointer-events-none absolute -top-1/4 -left-1/4 hidden h-[150%] w-[80%] text-cta/10 lg:block"
-          viewBox="0 0 400 400"
-          aria-hidden="true"
-        >
-          <circle cx="200" cy="200" r="200" fill="currentColor" />
+        {/*
+          clipPath (clipPathUnits="objectBoundingBox", so 0–1 maps to the
+          image pane's own box regardless of viewport) carves a smooth
+          concave curve into the image's left edge — the dark green section
+          background shows through the clipped area, reading as the panel
+          "biting into" the photo rather than a straight/diagonal cut.
+        */}
+        <svg width="0" height="0" aria-hidden="true" className="absolute">
+          <defs>
+            <clipPath id="hero-image-clip" clipPathUnits="objectBoundingBox">
+              <path d="M0.05,0 L1,0 L1,1 L0.05,1 C0.05,0.75 0.32,0.65 0.32,0.5 C0.32,0.35 0.05,0.25 0.05,0 Z" />
+            </clipPath>
+          </defs>
         </svg>
-
         {/* Image pane — mobile: stacked on top, full color. Desktop: absolute right half, diagonally clipped so photo dominates up top and green anchors the text/CTA corner below. */}
-        <div className="relative order-1 h-105 sm:h-140 lg:absolute lg:inset-y-0 lg:right-0 lg:order-2 lg:h-auto lg:w-[58%] lg:[clip-path:polygon(9%_0,100%_0,100%_100%,33%_100%)]">
+        <div className="relative order-1 h-105 overflow-hidden sm:h-140 lg:absolute lg:inset-y-0 lg:right-0 lg:order-2 lg:h-auto lg:w-[58%] lg:[clip-path:url(#hero-image-clip)]">
           <AnimatePresence initial={false}>
             <motion.div
               key={index}
@@ -71,11 +76,10 @@ export function Hero() {
               exit={{ opacity: 0 }}
               transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
             >
-              <Image
+              <ParallaxImage
                 src={slide.image}
                 alt=""
-                fill
-                priority={index === 0}
+                preload={index === 0}
                 sizes="(min-width: 1024px) 58vw, 100vw"
                 className="object-cover"
               />
@@ -85,10 +89,10 @@ export function Hero() {
 
         {/* Text pane — pt-32+ guarantees clearance under the floating nav (h-9 utility bar + h-20 nav) so content never collides with it. */}
         <div className="relative z-10 order-2 flex min-h-[45vh] items-center pt-32 pb-16 sm:pt-36 sm:pb-20 lg:order-1 lg:min-h-0 lg:pt-32 lg:pb-16">
-          <Container className="lg:pr-[4%]">
-            <div className="flex flex-col gap-6 lg:max-w-[46ch]">
-              <span className="flex items-center gap-3 text-sm font-semibold tracking-[0.16em] text-primary-foreground/80 uppercase">
-                <span className="h-px w-10 bg-cta" aria-hidden="true" />
+          <Container className="lg:pr-[4%] lg:pl-[8%]">
+            <div className="flex flex-col gap-6 lg:max-w-[80ch]">
+              <span className="text-primary-foreground/80 flex items-center gap-3 text-sm font-semibold tracking-[0.16em] uppercase">
+                <span className="bg-cta h-px w-10" aria-hidden="true" />
                 {slide.eyebrow}
               </span>
 
@@ -104,13 +108,16 @@ export function Hero() {
                   <h1 className="font-heading text-4xl font-semibold text-balance sm:text-5xl lg:text-6xl">
                     {slide.headline}
                   </h1>
-                  <p className="max-w-[50ch] text-lg text-primary-foreground/85">
+                  <p className="text-primary-foreground/85 max-w-[80ch] text-lg">
                     {slide.subhead}
                   </p>
                   <div className="flex flex-wrap gap-4 pt-2">
                     <Link
                       href={slide.cta.href}
-                      className={cn(buttonVariants({ variant: "cta", size: "xl" }), "group")}
+                      className={cn(
+                        buttonVariants({ variant: "cta", size: "xl" }),
+                        "group"
+                      )}
                     >
                       {slide.cta.label}
                       <ArrowRight className="size-5 transition-transform duration-300 group-hover:translate-x-1" />
@@ -136,7 +143,7 @@ export function Hero() {
                       "size-3 rounded-full border transition-colors duration-300",
                       i === index
                         ? "border-cta bg-cta"
-                        : "border-primary-foreground/50 bg-transparent hover:border-primary-foreground/80"
+                        : "border-primary-foreground/50 hover:border-primary-foreground/80 bg-transparent"
                     )}
                   />
                 ))}

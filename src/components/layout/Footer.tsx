@@ -25,7 +25,7 @@ export function Footer() {
 
       <Container className="grid gap-12 py-20 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
         <div className="flex flex-col gap-4 sm:col-span-2 lg:col-span-1">
-          <span className="font-heading text-2xl font-semibold">Agrisoil</span>
+          <span className="font-heading text-2xl font-semibold">SoilAgri</span>
           <p className="max-w-[32ch] text-background/70">{company.tagline}</p>
         </div>
 
