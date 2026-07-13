@@ -44,6 +44,15 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: "/supply-chain",
+        destination: "/services/supply-chain-management",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

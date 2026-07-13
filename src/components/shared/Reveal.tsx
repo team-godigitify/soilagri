@@ -58,13 +58,15 @@ export function RevealItem({
   children,
   className,
   id,
+  variants = fadeUp,
 }: {
   children: React.ReactNode;
   className?: string;
   id?: string;
+  variants?: Variants;
 }) {
   return (
-    <motion.div id={id} className={className} variants={fadeUp}>
+    <motion.div id={id} className={className} variants={variants}>
       {children}
     </motion.div>
   );
