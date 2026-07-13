@@ -1,32 +1,17 @@
-import { company } from "@/content/company";
-import type { Product } from "@/types/content";
-
-export function organizationJsonLd() {
+/**
+ * Organization JSON-LD builder. Parameterized (not content-coupled) so it
+ * can be wired up again once the new brand's name/legal name/address exist.
+ */
+export function organizationJsonLd(org: {
+  name: string;
+  legalName?: string;
+  address?: string;
+}) {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: company.brandName,
-    legalName: company.legalName,
-    address: company.headOffice,
-  };
-}
-
-export function productJsonLd(product: Product) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: product.name,
-    description: product.overview,
-    category: product.category,
-    brand: {
-      "@type": "Organization",
-      name: company.brandName,
-    },
-    additionalProperty: product.specs.map((spec) => ({
-      "@type": "PropertyValue",
-      name: spec.property,
-      value: spec.value,
-      ...(spec.testMethod ? { description: `Test method: ${spec.testMethod}` } : {}),
-    })),
+    name: org.name,
+    ...(org.legalName ? { legalName: org.legalName } : {}),
+    ...(org.address ? { address: org.address } : {}),
   };
 }

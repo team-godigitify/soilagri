@@ -47,13 +47,11 @@ export async function sendRfqAutoAck(data: RfqFormValues) {
   const { error } = await resend.emails.send({
     from: env.RFQ_REPLY_FROM,
     to: data.email,
-    subject: "We received your request — Agrisoil",
+    subject: "We received your request",
     text: [
       `Hi ${data.name},`,
       "",
-      "Thanks for reaching out to Agrisoil. We've received your request and will respond within 1-2 business days.",
-      "",
-      "— Agrisoil",
+      "Thanks for reaching out. We've received your request and will respond within 1-2 business days.",
     ].join("\n"),
   });
 

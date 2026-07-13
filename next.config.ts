@@ -44,20 +44,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  async redirects() {
-    return [
-      {
-        source: "/offices",
-        destination: "/about#footprint",
-        permanent: true,
-      },
-      {
-        source: "/capabilities",
-        destination: "/supply-chain",
-        permanent: true,
-      },
-    ];
-  },
 };
 
 export default nextConfig;

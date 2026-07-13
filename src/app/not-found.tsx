@@ -12,8 +12,8 @@ export default function NotFound() {
         The page you&apos;re looking for doesn&apos;t exist or may have
         moved.
       </p>
-      <Link href="/products" className={buttonVariants({ variant: "default" })}>
-        View products
+      <Link href="/" className={buttonVariants({ variant: "default" })}>
+        Back to home
       </Link>
     </Container>
   );
