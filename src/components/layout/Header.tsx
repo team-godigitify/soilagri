@@ -61,7 +61,7 @@ export function Header() {
       <div className="bg-foreground text-background">
         <Container className="flex h-9 items-center justify-between text-xs">
           <span className="hidden sm:inline">
-            Montreal, Canada &middot; San Jose, USA
+            Montreal, Canada (HQ) &middot; 10 Offices Worldwide
           </span>
           <a
             href={`mailto:${company.generalEmail}`}

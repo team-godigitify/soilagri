@@ -6,10 +6,12 @@ import type { NextConfig } from "next";
 // relaxed policy.
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""}`,
+  // maps.googleapis.com: Google Maps JS API bootstrap loader (Contact page map).
+  `script-src 'self' 'unsafe-inline' https://maps.googleapis.com${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: https://res.cloudinary.com https://images.unsplash.com",
-  "connect-src 'self'",
+  // *.googleapis.com/*.gstatic.com: map tiles and marker icons.
+  "img-src 'self' data: https://res.cloudinary.com https://images.unsplash.com https://*.googleapis.com https://*.gstatic.com",
+  "connect-src 'self' https://*.googleapis.com",
   "font-src 'self'",
   "frame-ancestors 'none'",
 ].join("; ");

@@ -6,7 +6,7 @@ export const company = {
   brandName: "SoilAgri",
   legalName: "9542-2309 Québec Inc.",
   tradeName: "SoilAgri International Trading Inc.",
-  headOffice: "204-6424 Jean-Talon EST, Montreal, QC H1S 1M8, Canada",
+  headOffice: "1010 Rue de la Gauchetière Ouest, Suite 2400, Montréal, QC H3B 2N2, Canada",
   tagline: "Cultivating Growth. Connecting Markets. Building Tomorrow.",
   generalEmail: "vivekvhora@soilagri.com",
   aboutSummary:

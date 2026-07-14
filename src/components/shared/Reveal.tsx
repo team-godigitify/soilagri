@@ -10,6 +10,7 @@ type RevealProps = {
   variants?: Variants;
   delay?: number;
   as?: "div" | "section";
+  id?: string;
 };
 
 /** Fade-and-rise on scroll into view. Animates once; respects reduced motion via `transform`/`opacity` only. */
@@ -19,10 +20,12 @@ export function Reveal({
   variants = fadeUp,
   delay = 0,
   as = "div",
+  id,
 }: RevealProps) {
   const MotionTag = as === "section" ? motion.section : motion.div;
   return (
     <MotionTag
+      id={id}
       className={className}
       initial="hidden"
       whileInView="show"

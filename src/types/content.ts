@@ -75,3 +75,91 @@ export type NewsItem = {
   href: string;
   image: string;
 };
+
+/* ---------------------------------------------------------------------- */
+/* Interior-page content contracts — About, Products, Services,           */
+/* Industries, Global Network, Resources. Pure data; templates render it. */
+/* ---------------------------------------------------------------------- */
+
+export type Office = {
+  id: string;
+  label: string;
+  region: string;
+  kind: "hq" | "office";
+  address: string;
+  email: string;
+  /** Approximate city-center coordinates for the office's street address — public geographic fact, used to plot the Contact page map. */
+  lat: number;
+  lng: number;
+};
+
+export type TrustPillar = {
+  icon: LucideIcon;
+  title: string;
+  body: string;
+};
+
+export type LeadershipProfile = {
+  name: string;
+  title: string;
+  quote?: string;
+};
+
+export type ProductApplication = { title: string; body: string };
+
+export type ProductSpecRow = { property: string; method?: string; value: string };
+
+export type ProductCategorySlug =
+  | "fertilizers"
+  | "agricultural-commodities"
+  | "industrial-raw-materials";
+
+export type ProductDetail = {
+  slug: string;
+  category: ProductCategorySlug;
+  name: string;
+  /** One-line positioning shown as the hero subhead. */
+  positioning: string;
+  forms?: string[];
+  overviewEyebrow?: string;
+  overviewBody: string;
+  image: string;
+  /** Absent entirely for products without a confirmed spec sheet — the section simply doesn't render (Law 3). */
+  specs?: ProductSpecRow[];
+  packaging?: string[];
+  origins?: string[];
+  applications?: ProductApplication[];
+  /** Short "why this product performs" bullet list (e.g. Urea's Ch.7 advantages) — absent when not confirmed. */
+  advantages?: string[];
+  qualityNote?: string;
+  logisticsNote?: string;
+  /** Slugs of related products (any category) to cross-link at the foot of the page. */
+  relatedSlugs?: string[];
+};
+
+export type ServiceDetail = {
+  slug: string;
+  name: string;
+  icon: LucideIcon;
+  summary: string;
+  narrative: string;
+  covers: string[];
+  relatedSlugs?: string[];
+};
+
+export type IndustryProductLink = { category: ProductCategorySlug; slug: string; name: string };
+
+export type IndustryDetail = {
+  slug: string;
+  name: string;
+  icon: LucideIcon;
+  summary: string;
+  challenge: string;
+  image: string;
+  /** Customer segments served within this industry (Ch.9) — rendered as InfoChips. */
+  servedSegments?: string[];
+  relatedProducts?: IndustryProductLink[];
+  relatedServiceSlugs?: string[];
+};
+
+export type FaqEntry = { question: string; answer: string };

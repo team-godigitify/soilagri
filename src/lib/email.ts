@@ -1,26 +1,57 @@
-import { Resend } from "resend";
 import { env } from "@/config/env";
-import type { RfqFormValues } from "@/lib/validation/rfq.schema";
+import { inquiryTypeLabel, type RfqFormValues } from "@/lib/validation/rfq.schema";
 
-const resend = new Resend(env.RESEND_API_KEY);
+const BREVO_ENDPOINT = "https://api.brevo.com/v3/smtp/email";
 
 function subjectLine(data: RfqFormValues) {
-  return `New RFQ: ${data.company} — ${data.productInterest ?? "General"}`;
+  return `New ${inquiryTypeLabel(data.inquiryType)}: ${data.company} — ${data.productInterest ?? "General"}`;
+}
+
+async function sendBrevoEmail(payload: {
+  to: { email: string; name?: string }[];
+  subject: string;
+  textContent: string;
+  replyTo?: { email: string };
+}) {
+  const response = await fetch(BREVO_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "api-key": env.BREVO_API_KEY,
+      "Content-Type": "application/json",
+      accept: "application/json",
+    },
+    body: JSON.stringify({
+      sender: { email: env.RFQ_REPLY_FROM },
+      to: payload.to,
+      replyTo: payload.replyTo,
+      subject: payload.subject,
+      textContent: payload.textContent,
+    }),
+  });
+
+  if (!response.ok) {
+    const body = await response.text().catch(() => "");
+    throw new Error(`Brevo send failed (${response.status}): ${body}`);
+  }
 }
 
 /**
- * Email is the system of record (Law 4) — there is no database. A
- * delivery failure here means the lead is genuinely at risk, so callers
- * must log the error (Section 8: "never silently lose a lead").
+ * Postgres is the system of record when configured (crmEnabled — see
+ * src/lib/db.ts); email is the resilient notification layer regardless,
+ * so a delivery failure here must still be logged (Section 8: "never
+ * silently lose a lead") even when the DB write already succeeded.
  * [CONFIRM monitoring channel] for alerting on repeated failures.
  */
 export async function sendRfqNotification(data: RfqFormValues) {
-  const { error } = await resend.emails.send({
-    from: env.RFQ_REPLY_FROM,
-    to: env.RFQ_NOTIFY_TO.split(",").map((s) => s.trim()),
-    replyTo: data.email,
+  await sendBrevoEmail({
+    to: env.RFQ_NOTIFY_TO.split(",")
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .map((email) => ({ email })),
+    replyTo: { email: data.email },
     subject: subjectLine(data),
-    text: [
+    textContent: [
+      `Inquiry Type: ${inquiryTypeLabel(data.inquiryType)}`,
       `Name: ${data.name}`,
       `Company: ${data.company}`,
       `Email: ${data.email}`,
@@ -33,27 +64,19 @@ export async function sendRfqNotification(data: RfqFormValues) {
       data.message,
     ].join("\n"),
   });
-
-  // The Resend SDK resolves with { data, error } instead of rejecting on
-  // API-level failures — a bare `await` here would silently swallow a
-  // failed send, which is exactly what Section 8 forbids.
-  if (error) throw new Error(`Resend notification failed: ${error.message}`);
 }
 
 // SLA wording ("1-2 business days") is DRAFT copy pending client
 // confirmation (Section 7.8) — only commit to a number the client can
 // actually meet.
 export async function sendRfqAutoAck(data: RfqFormValues) {
-  const { error } = await resend.emails.send({
-    from: env.RFQ_REPLY_FROM,
-    to: data.email,
+  await sendBrevoEmail({
+    to: [{ email: data.email, name: data.name }],
     subject: "We received your request",
-    text: [
+    textContent: [
       `Hi ${data.name},`,
       "",
       "Thanks for reaching out. We've received your request and will respond within 1-2 business days.",
     ].join("\n"),
   });
-
-  if (error) throw new Error(`Resend auto-ack failed: ${error.message}`);
 }
