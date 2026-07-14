@@ -23,7 +23,7 @@ const heading = Poppins({
   weight: ["500", "600", "700"],
 });
 
-const defaultTitle = `${company.brandName} — Fertilizer Trading`;
+const defaultTitle = `${company.brandName} — Global Fertilizer Trading Company`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_SITE_URL),
