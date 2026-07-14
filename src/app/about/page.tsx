@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Quote } from "lucide-react";
 import { Container } from "@/components/shared/Container";
@@ -179,9 +180,20 @@ export default function AboutPage() {
                   &ldquo;{founder.quote}&rdquo;
                 </p>
               )}
-              <div className="flex flex-col">
-                <span className="font-semibold text-foreground">{founder.name}</span>
-                <span className="text-sm text-muted-foreground">{founder.title}</span>
+              <div className="flex items-center gap-3">
+                {founder.image && (
+                  <Image
+                    src={founder.image}
+                    alt={founder.name}
+                    width={48}
+                    height={48}
+                    className="size-12 rounded-full object-cover"
+                  />
+                )}
+                <div className="flex flex-col">
+                  <span className="font-semibold text-foreground">{founder.name}</span>
+                  <span className="text-sm text-muted-foreground">{founder.title}</span>
+                </div>
               </div>
             </Reveal>
           )}

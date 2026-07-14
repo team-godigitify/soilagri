@@ -222,22 +222,25 @@ export const trustPillars: TrustPillar[] = [
 ];
 
 /**
- * Only Vivek Vohra (Founder/CEO) and Csaavi Danykholi (Finance Head) are
- * named unambiguously and consistently across the source document (Ch.1,
- * Ch.8). A "Marketing Head" is referenced only as "Danykholi" with no
- * first name given — not rendered here rather than guessed.
- * [CONFIRM: is the Marketing Head a distinct person, or a document
- * duplication of Csaavi Danykholi's name?]
+ * Three distinct individuals, confirmed directly by the client — the
+ * source document's "Csaavi Danykholi" (Ch.1/8, Finance Head) was a
+ * transcription error conflating two people's names into one string.
  */
 export const leadership: LeadershipProfile[] = [
   {
     name: company.founderQuote.name,
     title: company.founderQuote.title,
     quote: company.founderQuote.quote,
+    image: "/assets/founder-headshot.png",
+    portraitImage: "/assets/founderimage.png",
   },
   {
-    name: "Csaavi Danykholi",
+    name: "Saavika Chaudhary",
     title: "Finance Head",
+  },
+  {
+    name: "Danykholi",
+    title: "Marketing & Business Development Head",
   },
 ];
 

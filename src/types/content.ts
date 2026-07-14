@@ -103,6 +103,10 @@ export type LeadershipProfile = {
   name: string;
   title: string;
   quote?: string;
+  /** Headshot crop for compact cards (avatar-sized placements). */
+  image?: string;
+  /** Full-length portrait for the dedicated leadership page's feature treatment. */
+  portraitImage?: string;
 };
 
 export type ProductApplication = { title: string; body: string };

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -23,13 +23,44 @@ const heading = Poppins({
   weight: ["500", "600", "700"],
 });
 
+const defaultTitle = `${company.brandName} — Fertilizer Trading`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_SITE_URL),
   title: {
-    default: `${company.brandName} — Fertilizer Trading`,
+    default: defaultTitle,
     template: `%s | ${company.brandName}`,
   },
   description: company.aboutSummary,
+  keywords: [
+    "fertilizer trading",
+    "agricultural commodities",
+    "urea 46%",
+    "NPK fertilizer",
+    "commodity sourcing",
+    "international commodity trading",
+    "wheat corn soybeans trading",
+    "wood pulp supplier",
+  ],
+  authors: [{ name: company.tradeName }],
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: company.brandName,
+    title: defaultTitle,
+    description: company.aboutSummary,
+    images: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: company.brandName }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: defaultTitle,
+    description: company.aboutSummary,
+    images: ["/twitter-image.png"],
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#123c30",
 };
 
 export default function RootLayout({

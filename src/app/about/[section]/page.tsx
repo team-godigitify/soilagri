@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Check, Quote } from "lucide-react";
 import { notFound } from "next/navigation";
@@ -9,7 +10,6 @@ import { SectionIntro } from "@/components/interior/SectionIntro";
 import { StatRows } from "@/components/interior/StatRows";
 import { IconTileCard } from "@/components/interior/IconTileCard";
 import { NetworkMap } from "@/components/interior/NetworkMap";
-import { EmptyStateBlock } from "@/components/interior/EmptyStateBlock";
 import { RFQBand } from "@/components/interior/RFQBand";
 import { Reveal, RevealGroup, RevealItem } from "@/components/shared/Reveal";
 import { findNavChild, sectionSlugs } from "@/content/nav";
@@ -121,7 +121,7 @@ export default async function AboutSectionPage({ params }: { params: Promise<{ s
 
   if (section === "leadership") {
     const founder = leadership[0];
-    const finance = leadership[1];
+    const otherLeaders = leadership.slice(1);
     return (
       <>
         <InnerHero eyebrow="About SoilAgri" title={child.label} subhead={child.description} breadcrumbs={breadcrumbs} />
@@ -129,33 +129,48 @@ export default async function AboutSectionPage({ params }: { params: Promise<{ s
         <section className="bg-background py-16 sm:py-24">
           <Container className="flex flex-col gap-8">
             {founder && (
-              <Reveal className="flex flex-col gap-6 rounded-3xl bg-card p-8 shadow-elevated-xs ring-1 ring-foreground/8 sm:p-12">
-                <Quote className="size-9 text-cta" aria-hidden="true" strokeWidth={1.5} />
-                {founder.quote && (
-                  <p className="max-w-[64ch] font-heading text-2xl leading-snug text-balance text-foreground sm:text-3xl">
-                    &ldquo;{founder.quote}&rdquo;
-                  </p>
+              <Reveal className="grid overflow-hidden rounded-3xl bg-card shadow-elevated-xs ring-1 ring-foreground/8 lg:grid-cols-[280px_1fr]">
+                {founder.portraitImage && (
+                  <div className="relative h-96 lg:h-auto">
+                    <Image
+                      src={founder.portraitImage}
+                      alt={founder.name}
+                      fill
+                      sizes="(min-width: 1024px) 280px, 100vw"
+                      className="object-cover object-top"
+                    />
+                  </div>
                 )}
-                <div className="flex flex-col">
-                  <span className="text-lg font-semibold text-foreground">{founder.name}</span>
-                  <span className="text-sm text-muted-foreground">{founder.title}</span>
+                <div className="flex flex-col gap-6 p-8 sm:p-12">
+                  <Quote className="size-9 text-cta" aria-hidden="true" strokeWidth={1.5} />
+                  {founder.quote && (
+                    <p className="max-w-[64ch] font-heading text-2xl leading-snug text-balance text-foreground sm:text-3xl">
+                      &ldquo;{founder.quote}&rdquo;
+                    </p>
+                  )}
+                  <div className="flex flex-col">
+                    <span className="text-lg font-semibold text-foreground">{founder.name}</span>
+                    <span className="text-sm text-muted-foreground">{founder.title}</span>
+                  </div>
                 </div>
               </Reveal>
             )}
 
-            {finance && (
-              <Reveal className="flex flex-col gap-2 rounded-3xl bg-secondary p-7 sm:w-fit">
-                <span className="text-xs font-semibold tracking-[0.12em] text-cta uppercase">Finance Leadership</span>
-                <span className="font-heading text-lg font-semibold text-foreground">{finance.name}</span>
-                <span className="text-sm text-muted-foreground">{finance.title}</span>
-              </Reveal>
+            {otherLeaders.length > 0 && (
+              <RevealGroup className="grid gap-4 sm:grid-cols-2">
+                {otherLeaders.map((leader) => (
+                  <RevealItem
+                    key={leader.name}
+                    className="flex flex-col gap-2 rounded-3xl bg-secondary p-7"
+                  >
+                    <span className="text-xs font-semibold tracking-widest text-cta uppercase">
+                      {leader.title}
+                    </span>
+                    <span className="font-heading text-lg font-semibold text-foreground">{leader.name}</span>
+                  </RevealItem>
+                ))}
+              </RevealGroup>
             )}
-
-            <EmptyStateBlock
-              title="Additional leadership profiles in progress"
-              body="SoilAgri's broader leadership team profiles are being finalized. In the meantime, every enquiry is reviewed with founder-level oversight."
-              cta={{ label: "Contact Us", href: "/contact" }}
-            />
           </Container>
         </section>
 
