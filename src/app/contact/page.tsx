@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
-import { MapPin, Mail, Clock, ChevronDown } from "lucide-react";
+import { MapPin, Mail, Clock } from "lucide-react";
 import { Container } from "@/components/shared/Container";
 import { InnerHero } from "@/components/interior/InnerHero";
 import { SectionIntro } from "@/components/interior/SectionIntro";
 import { Reveal } from "@/components/shared/Reveal";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { ContactMap } from "@/components/contact/ContactMap";
-import { offices, officesByRegion } from "@/content/offices";
-import { env, mapsEnabled } from "@/config/env";
+import { offices } from "@/content/offices";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -17,7 +16,6 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   const hq = offices.find((office) => office.kind === "hq");
-  const regions = officesByRegion();
 
   return (
     <>
@@ -77,34 +75,9 @@ export default function ContactPage() {
             lede={`${offices.length} offices worldwide — select one to zoom in, or view them all at once.`}
           />
 
-          {mapsEnabled && env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ? (
-            <Reveal>
-              <ContactMap offices={offices} apiKey={env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY} />
-            </Reveal>
-          ) : (
-            <Reveal>
-              <details className="group/details rounded-3xl border border-border bg-card shadow-elevated-xs">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-7 text-sm font-semibold text-foreground">
-                  View all {offices.length} offices worldwide
-                  <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform duration-300 group-open/details:rotate-180" />
-                </summary>
-                <div className="grid gap-5 px-7 pb-7 sm:grid-cols-2 lg:grid-cols-3">
-                  {regions.map((group) => (
-                    <div key={group.region} className="flex flex-col gap-2">
-                      <span className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
-                        {group.region}
-                      </span>
-                      {group.offices.map((office) => (
-                        <p key={office.id} className="text-sm text-muted-foreground">
-                          {office.label}
-                        </p>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              </details>
-            </Reveal>
-          )}
+          <Reveal>
+            <ContactMap offices={offices} />
+          </Reveal>
         </Container>
       </section>
     </>

@@ -3,10 +3,10 @@ import { z } from "zod";
 /**
  * Split into "core" (required — the site cannot function correctly without
  * these, so boot fails loudly per the existing convention) and "optional"
- * (new capabilities — CRM database, admin auth, Google Maps — that must
- * NOT take the entire site down while they're still being provisioned.
- * Each optional capability checks its own env at the point of use and
- * degrades gracefully instead).
+ * (new capabilities — the RFQ CRM database and admin auth — that must NOT
+ * take the entire site down while they're still being provisioned. Each
+ * optional capability checks its own env at the point of use and degrades
+ * gracefully instead).
  */
 const coreSchema = z.object({
   BREVO_API_KEY: z.string().min(1, "BREVO_API_KEY is required"),
@@ -17,13 +17,11 @@ const coreSchema = z.object({
 });
 
 const optionalSchema = z.object({
-  // RFQ CRM (Vercel Postgres) — absent until the database is provisioned.
+  // RFQ CRM (Postgres) — absent until the database is provisioned.
   POSTGRES_URL: z.string().min(1).optional(),
   // Admin CRM login — absent until an operator sets a password.
   ADMIN_PASSWORD: z.string().min(8).optional(),
   ADMIN_SESSION_SECRET: z.string().min(16).optional(),
-  // Contact page map — absent until a Google Maps API key is issued.
-  NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: z.string().min(1).optional(),
 });
 
 /**
@@ -58,7 +56,6 @@ function loadEnv() {
     POSTGRES_URL: emptyToUndefined(process.env.POSTGRES_URL),
     ADMIN_PASSWORD: emptyToUndefined(process.env.ADMIN_PASSWORD),
     ADMIN_SESSION_SECRET: emptyToUndefined(process.env.ADMIN_SESSION_SECRET),
-    NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: emptyToUndefined(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY),
   });
 
   if (!optional.success) {
@@ -74,8 +71,5 @@ function loadEnv() {
 
 export const env = loadEnv();
 
-/** True once Vercel Postgres is configured — gates the CRM (db, admin routes/pages) so it degrades instead of crashing. */
+/** True once Postgres is configured — gates the CRM (db, admin routes/pages) so it degrades instead of crashing. */
 export const crmEnabled = Boolean(env.POSTGRES_URL && env.ADMIN_PASSWORD && env.ADMIN_SESSION_SECRET);
-
-/** True once a Google Maps API key exists — gates the Contact page map so it falls back to a plain office list instead. */
-export const mapsEnabled = Boolean(env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
