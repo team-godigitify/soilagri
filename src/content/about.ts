@@ -231,6 +231,7 @@ export const leadership: LeadershipProfile[] = [
     name: company.founderQuote.name,
     title: company.founderQuote.title,
     quote: company.founderQuote.quote,
+    email: "info@soilagri.com",
     image: "/assets/founder-headshot.png",
     portraitImage: "/assets/founderimage.png",
   },

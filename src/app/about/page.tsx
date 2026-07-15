@@ -193,6 +193,14 @@ export default function AboutPage() {
                 <div className="flex flex-col">
                   <span className="font-semibold text-foreground">{founder.name}</span>
                   <span className="text-sm text-muted-foreground">{founder.title}</span>
+                  {founder.email && (
+                    <a
+                      href={`mailto:${founder.email}`}
+                      className="text-sm text-primary hover:underline"
+                    >
+                      {founder.email}
+                    </a>
+                  )}
                 </div>
               </div>
             </Reveal>
