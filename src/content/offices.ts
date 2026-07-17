@@ -25,8 +25,8 @@ export const offices: Office[] = [
     kind: "hq",
     address: company.headOffice,
     email: company.generalEmail,
-    lat: 45.497,
-    lng: -73.57,
+    lat: 45.5811,
+    lng: -73.5958,
   },
   {
     id: "houston",
